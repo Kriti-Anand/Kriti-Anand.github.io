@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kriti Anand | SRE / DevOps Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with a Teal accent -->
+    <!-- Application Structure Plan: The SPA is designed as a single-page, vertical narrative that guides recruiters through Kriti's qualifications. It starts with a strong summary, followed by an interactive skills dashboard to quickly highlight relevant tech. The experience is presented as a timeline to show career progression, and projects are in a card-based portfolio to showcase practical abilities. This structure prioritizes discoverability and engagement over a static, linear document format, allowing recruiters to quickly access the information most relevant to them. -->
+    <!-- Visualization & Content Choices: 
+        - Summary: Standard text block for a professional introduction.
+        - Skills: Interactive filterable grid (HTML/JS) to manage the density of information and allow targeted exploration. Goal: Organize/Inform.
+        - Experience: Vertical timeline (HTML/Tailwind) with expandable sections (JS) to show progression without overwhelming the initial view. Goal: Inform/Show Growth.
+        - Key Achievements: A horizontal bar chart (Chart.js/Canvas) visually quantifies key successes from her current role, providing immediate, high-impact evidence of her capabilities. Goal: Compare/Impact.
+        - Projects: Clickable cards opening a modal (HTML/Tailwind/JS) to provide deep-dives into technical work without cluttering the main layout. Goal: Demonstrate.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #383838;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .section-title {
+            color: #008080;
+        }
+        .skill-card, .project-card, .timeline-item {
+            border: 1px solid #E5E7EB;
+            transition: all 0.3s ease;
+        }
+        .skill-card:hover, .project-card:hover, .timeline-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border-color: #008080;
+        }
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-[#FDFBF8]/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-teal-600">Kriti Anand</div>
+            <div class="hidden md:flex space-x-6 text-gray-700">
+                <a href="#about" class="hover:text-teal-600">About</a>
+                <a href="#skills" class="hover:text-teal-600">Skills</a>
+                <a href="#experience" class="hover:text-teal-600">Experience</a>
+                <a href="#projects" class="hover:text-teal-600">Projects</a>
+                <a href="#contact" class="hover:text-teal-600 bg-teal-500 text-white px-4 py-2 rounded-full transition-transform transform hover:scale-105">Contact</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <span class="block w-6 h-0.5 bg-current my-1"></span>
+                <span class="block w-6 h-0.5 bg-current my-1"></span>
+                <span class="block w-6 h-0.5 bg-current my-1"></span>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#FDFBF8] py-4">
+            <a href="#about" class="block text-center py-2 hover:bg-teal-50">About</a>
+            <a href="#skills" class="block text-center py-2 hover:bg-teal-50">Skills</a>
+            <a href="#experience" class="block text-center py-2 hover:bg-teal-50">Experience</a>
+            <a href="#projects" class="block text-center py-2 hover:bg-teal-50">Projects</a>
+            <a href="#contact" class="block text-center py-2 hover:bg-teal-50">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="hero" class="text-center py-20">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">Kriti Anand</h1>
+            <h2 class="text-2xl md:text-3xl font-light text-teal-600 mb-8">Site Reliability Engineer / DevOps Engineer</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                Bridging the gap between development and operations with a passion for automation, reliability, and building scalable systems.
+            </p>
+        </section>
+
+        <section id="about" class="py-16">
+            <h3 class="text-3xl font-bold text-center mb-12 section-title">About Me</h3>
+            <div class="max-w-4xl mx-auto text-lg text-gray-700 leading-relaxed bg-white p-8 rounded-lg shadow-sm border border-gray-200">
+                <p>
+                    A proactive Service Delivery Analyst with over 3 years of experience in production support and system administration, now channeling that expertise into a career in Site Reliability and DevOps. My journey is defined by a commitment to transforming operational challenges into automated, reliable solutions. I am proficient in a modern technology stack including AWS, Docker, and Kubernetes, and leverage Python and Bash scripting to architect and maintain resilient systems that drive business value.
+                </p>
+            </div>
+        </section>
+
+        <section id="skills" class="py-16">
+            <h3 class="text-3xl font-bold text-center mb-12 section-title">Technical Skills</h3>
+            <div class="flex justify-center flex-wrap gap-2 mb-8" id="skill-filters">
+                <button class="skill-filter-btn active bg-teal-600 text-white px-4 py-2 rounded-full" data-filter="all">All</button>
+                <button class="skill-filter-btn bg-white text-teal-600 px-4 py-2 rounded-full border border-teal-600 hover:bg-teal-50" data-filter="cloud">Cloud & DevOps</button>
+                <button class="skill-filter-btn bg-white text-teal-600 px-4 py-2 rounded-full border border-teal-600 hover:bg-teal-50" data-filter="monitoring">Monitoring & Alerting</button>
+                <button class="skill-filter-btn bg-white text-teal-600 px-4 py-2 rounded-full border border-teal-600 hover:bg-teal-50" data-filter="code">Languages</button>
+                <button class="skill-filter-btn bg-white text-teal-600 px-4 py-2 rounded-full border border-teal-600 hover:bg-teal-50" data-filter="db">Databases</button>
+            </div>
+            <div id="skills-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+            </div>
+        </section>
+
+        <section id="experience" class="py-16">
+            <h3 class="text-3xl font-bold text-center mb-12 section-title">Professional Experience</h3>
+            <div class="relative max-w-4xl mx-auto">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-300"></div>
+                <div id="timeline-container" class="space-y-16">
+                </div>
+            </div>
+        </section>
+        
+        <section id="achievements-viz" class="py-16">
+            <h3 class="text-3xl font-bold text-center mb-12 section-title">Key Achievements at FIS</h3>
+             <p class="text-center max-w-3xl mx-auto text-gray-600 mb-8">
+                Visualizing the impact of automation and process improvements in my current role. These metrics represent significant gains in efficiency and system reliability.
+            </p>
+            <div class="chart-container bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                <canvas id="achievementsChart"></canvas>
+            </div>
+        </section>
+
+        <section id="projects" class="py-16">
+            <h3 class="text-3xl font-bold text-center mb-12 section-title">Projects</h3>
+            <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            </div>
+        </section>
+
+    </main>
+    
+    <footer id="contact" class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-3xl font-bold mb-4">Get In Touch</h3>
+            <p class="text-gray-400 mb-8">Feel free to reach out for collaborations or just a friendly chat!</p>
+            <div class="flex justify-center items-center space-x-6">
+                <a href="mailto:kritianand54@gmail.com" class="hover:text-teal-400">kritianand54@gmail.com</a>
+                <span>&bull;</span>
+                <a href="tel:9102888683" class="hover:text-teal-400">9102888683</a>
+                <span>&bull;</span>
+                <a href="https://www.linkedin.com/in/kriti-anand" target="_blank" rel="noopener noreferrer" class="hover:text-teal-400">LinkedIn</a>
+            </div>
+            <p class="mt-8 text-sm text-gray-500">Kriti Anand &copy; 2025</p>
+        </div>
+    </footer>
+
+    <div id="project-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h4 id="modal-title" class="text-2xl font-bold text-teal-600"></h4>
+                    <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+                </div>
+                <div id="modal-tags" class="flex flex-wrap gap-2 mb-4"></div>
+                <p id="modal-description" class="text-gray-700 leading-relaxed"></p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const skillsData = [
+                { name: 'Python', category: 'code' }, { name: 'Bash', category: 'code' }, { name: 'C++', category: 'code' }, { name: 'SQL', category: 'code' },
+                { name: 'AWS', category: 'cloud' }, { name: 'Azure', category: 'cloud' }, { name: 'Docker', category: 'cloud' }, { name: 'Kubernetes', category: 'cloud' },
+                { name: 'Jenkins', category: 'cloud' }, { name: 'Git', category: 'cloud' }, { name: 'Terraform', category: 'cloud' }, { name: 'Ansible', category: 'cloud' },
+                { name: 'Datadog', category: 'monitoring' }, { name: 'Splunk', category: 'monitoring' }, { name: 'Grafana', category: 'monitoring' }, { name: 'Prometheus', category: 'monitoring' },
+                { name: 'ELK Stack', category: 'monitoring' }, { name: 'Airflow', category: 'monitoring' }, { name: 'Zena', category: 'monitoring' },
+                { name: 'MySQL', category: 'db' }, { name: 'MongoDB', category: 'db' }, { name: 'Oracle DB', category: 'db' }, { name: 'PostgreSQL', category: 'db' }
+            ];
+
+            const experienceData = [
+                {
+                    role: 'Service Delivery Analyst',
+                    company: 'Fidelity Information Services (FIS Global)',
+                    date: 'March 2023 - Present',
+                    side: 'left',
+                    details: [
+                        'Developed and implemented automation scripts using <strong>Python</strong> and <strong>Bash</strong> to streamline incident response, reducing manual intervention by <strong>40%</strong> and decreasing resolution time by <strong>25%</strong>.',
+                        'Administered and optimized <strong>Unix-based systems</strong> through proactive log analysis and troubleshooting, leading to a <strong>15% improvement in system uptime</strong> and a <strong>20% reduction in critical failures</strong>.',
+                        'Expertly managed the incident management lifecycle, resolving over <strong>100 production-impacting incidents</strong> and improving <strong>Service Level Agreements (SLAs) from 92% to 98.9%</strong>.',
+                        'Automated critical health checks for client UAT servers, including <strong>mount checks</strong> and <strong>database health assessments</strong>, significantly reducing manual monitoring efforts.'
+                    ]
+                },
+                {
+                    role: 'IT Trainee',
+                    company: 'Fidelity Information Services (FIS Global)',
+                    date: 'Feb 2022 - Feb 2023',
+                    side: 'right',
+                    details: [
+                        'Utilized <strong>Zena Workstation</strong> to automate day-end operational tasks, eliminating manual triggers and log retrieval, thereby <strong>increasing team efficiency by 40%</strong>.',
+                        'Collaborated with <strong>L2 support teams</strong> on critical deployments, improving issue triage efficiency and ensuring successful client implementations.'
+                    ]
+                }
+            ];
+
+            const projectsData = [
+                {
+                    id: 1,
+                    title: 'CI/CD Pipeline for a Web Application',
+                    tags: ['Jenkins', 'Docker', 'Kubernetes', 'Git'],
+                    description: 'Designed and implemented a full CI/CD pipeline for a sample web application using Git, Jenkins, and Docker to automate the software delivery lifecycle. Configured Jenkins jobs to automatically build and containerize the application upon code commit, reducing time from development to testing environments. Integrated automated tests into the pipeline to ensure code quality and stability. Deployed the containerized application to a local Kubernetes cluster, demonstrating end-to-end automation and microservices deployment patterns.'
+                },
+                {
+                    id: 2,
+                    title: 'Infrastructure as Code (IaC) with Terraform',
+                    tags: ['Terraform', 'AWS', 'IaC'],
+                    description: 'Provisioned and managed a cloud-based infrastructure (e.g., a web server, a database instance, and a load balancer) on AWS using Terraform. Developed reusable Terraform modules and configured state management to ensure consistent and reproducible infrastructure deployments. Automated the entire setup and teardown process, eliminating manual configuration and demonstrating expertise in managing cloud resources through code.'
+                },
+                {
+                    id: 3,
+                    title: 'Centralized Log Management with ELK Stack',
+                    tags: ['ELK Stack', 'Elasticsearch', 'Logstash', 'Kibana'],
+                    description: 'Built and configured a centralized logging and monitoring solution using the ELK Stack (Elasticsearch, Logstash, and Kibana). Deployed Logstash to collect, parse, and transform logs from various sources, sending them to Elasticsearch for indexing and storage. Created custom dashboards in Kibana to visualize log data in real-time, enabling rapid troubleshooting and root cause analysis for system failures.'
+                }
+            ];
+
+            const skillsGrid = document.getElementById('skills-grid');
+            const skillFilters = document.getElementById('skill-filters');
+            const timelineContainer = document.getElementById('timeline-container');
+            const projectsGrid = document.getElementById('projects-grid');
+            const modal = document.getElementById('project-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            const renderSkills = (filter = 'all') => {
+                skillsGrid.innerHTML = '';
+                const filteredSkills = filter === 'all' ? skillsData : skillsData.filter(s => s.category === filter);
+                filteredSkills.forEach(skill => {
+                    const skillEl = document.createElement('div');
+                    skillEl.className = 'skill-card bg-white p-4 text-center rounded-lg shadow-sm text-gray-700';
+                    skillEl.textContent = skill.name;
+                    skillsGrid.appendChild(skillEl);
+                });
+            };
+
+            skillFilters.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    document.querySelector('.skill-filter-btn.active').classList.remove('active', 'bg-teal-600', 'text-white');
+                    document.querySelector('.skill-filter-btn.active').classList.add('bg-white', 'text-teal-600');
+                    e.target.classList.add('active', 'bg-teal-600', 'text-white');
+                    e.target.classList.remove('bg-white', 'text-teal-600');
+                    renderSkills(e.target.dataset.filter);
+                }
+            });
+
+            const renderExperience = () => {
+                timelineContainer.innerHTML = '';
+                experienceData.forEach(item => {
+                    const sideClass = item.side === 'left' ? 'md:pr-8' : 'md:pl-8';
+                    const textAlign = item.side === 'left' ? 'md:text-right' : 'md:text-left';
+                    const timelineItem = document.createElement('div');
+                    timelineItem.className = 'relative';
+
+                    timelineItem.innerHTML = `
+                        <div class="md:flex ${item.side === 'right' ? 'flex-row-reverse' : ''} items-center">
+                            <div class="md:w-1/2">
+                                <div class="timeline-item p-6 bg-white rounded-lg shadow-sm w-full mx-auto ${sideClass}">
+                                    <p class="text-sm text-gray-500 mb-1 ${textAlign}">${item.date}</p>
+                                    <h4 class="text-xl font-bold mb-1 ${textAlign}">${item.role}</h4>
+                                    <p class="text-md text-teal-600 mb-4 ${textAlign}">${item.company}</p>
+                                    <ul class="list-disc list-inside text-left space-y-2 text-gray-600">
+                                        ${item.details.map(d => `<li>${d}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="hidden md:block absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+                                <div class="w-4 h-4 bg-teal-500 rounded-full border-4 border-white"></div>
+                            </div>
+                        </div>
+                    `;
+                    timelineContainer.appendChild(timelineItem);
+                });
+            };
+
+            const renderProjects = () => {
+                projectsGrid.innerHTML = '';
+                projectsData.forEach(project => {
+                    const projectCard = document.createElement('div');
+                    projectCard.className = 'project-card bg-white p-6 rounded-lg shadow-sm cursor-pointer';
+                    projectCard.dataset.projectId = project.id;
+                    projectCard.innerHTML = `
+                        <h4 class="text-xl font-bold text-teal-600 mb-2">${project.title}</h4>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${project.tags.map(tag => `<span class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">${tag}</span>`).join('')}
+                        </div>
+                        <p class="text-gray-600">${project.description.substring(0, 100)}...</p>
+                    `;
+                    projectsGrid.appendChild(projectCard);
+                });
+            };
+
+            const openModal = (projectId) => {
+                const project = projectsData.find(p => p.id == projectId);
+                if (!project) return;
+                document.getElementById('modal-title').textContent = project.title;
+                document.getElementById('modal-description').textContent = project.description;
+                const tagsContainer = document.getElementById('modal-tags');
+                tagsContainer.innerHTML = '';
+                project.tags.forEach(tag => {
+                    const tagEl = document.createElement('span');
+                    tagEl.className = 'bg-teal-100 text-teal-800 text-sm px-3 py-1 rounded-full';
+                    tagEl.textContent = tag;
+                    tagsContainer.appendChild(tagEl);
+                });
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.querySelector('.modal-content').classList.remove('scale-95');
+                }, 10);
+            };
+
+            const closeModal = () => {
+                modal.classList.add('opacity-0');
+                modal.querySelector('.modal-content').classList.add('scale-95');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            };
+
+            projectsGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.project-card');
+                if (card) {
+                    openModal(card.dataset.projectId);
+                }
+            });
+
+            modalCloseBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            const achievementsCtx = document.getElementById('achievementsChart').getContext('2d');
+            new Chart(achievementsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['SLA Compliance', 'Manual Intervention Reduction', 'Resolution Time Reduction', 'Critical Failure Reduction'],
+                    datasets: [{
+                        label: 'Improvement (%)',
+                        data: [7.5, 40, 25, 20],
+                        backgroundColor: 'rgba(0, 128, 128, 0.6)',
+                        borderColor: 'rgba(0, 128, 128, 1)',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.dataset.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Improvement (%)'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            renderSkills();
+            renderExperience();
+            renderProjects();
+        });
+    </script>
+</body>
+</html>
